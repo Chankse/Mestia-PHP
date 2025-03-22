@@ -3,6 +3,15 @@
 
 <?php
   session_start();
+
+  require_once __DIR__ . './Backend/repository/galleryRepository.php';
+
+  header('Content-Type: application/json');
+  
+  $galleryRepo = new GalleryRepository();
+  $galleryItems = $galleryRepo->getAll();
+  
+  echo json_encode($galleryItems, JSON_PRETTY_PRINT);
 ?>
 
   <head>
@@ -85,36 +94,9 @@
       </div>
 
       <div class="gallery-grid">
-        <?php
-        include_once 'config.php';
-        $connection = new mysqli($servername, $username, $password, $dbname);
-
-        if ($connection->connect_error) {
-          die("Connection failed: " . $connection->connect_error);
-        }
-      
-        $query = "SELECT path, alt_text, name FROM Gallery";
-        $result = mysqli_query($connection, $query);
-      
-        if (mysqli_num_rows($result) > 0) {
-          while ($row = mysqli_fetch_assoc($result)) {
-            $path = $row['path'];
-            $altText = $row['alt_text'];
-            $name = $row['name'];
-            $ariaLabel = $altText . " with text saying " . $name;
-            ?>
-            <figure aria-label="<?php echo htmlspecialchars($ariaLabel); ?>">
-              <img src="<?php echo htmlspecialchars($path); ?>" alt="<?php echo htmlspecialchars($altText); ?>" />
-              <h3><?php echo nl2br(htmlspecialchars($name)); ?></h3>
-            </figure>
-            <?php
-          }
-        } else {
-          echo "<p>No images found in the gallery.</p>";
-        }
-      
-        mysqli_close($connection);
-        ?>
+      <?php foreach ($galleryItems as $item): ?>
+        console.log($item);
+      <?php endforeach; ?>
       </div>
 
     </main>
