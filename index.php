@@ -32,7 +32,7 @@ session_start();
           <li><a href="index.php">Home</a></li>
           <li><a href="./Pages/sights.html">Sights</a></li>
           <li><a href="./Pages/gallery.php">Gallery</a></li>
-          <li><a href="./Pages/tours.html">Tours</a></li>
+          <li><a href="./Pages/tours.php">Tours</a></li>
           <li><a href="./Pages/contact.php">Contact</a></li>
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <li><a href="#">
@@ -79,7 +79,7 @@ session_start();
         culture and sightseeings.
       </h1>
       <a class="btn btn-full" href="Pages/sights.html">Learn More</a>
-      <a class="btn btn-ghost" href="Pages/tours.html">Select Tour</a>
+      <a class="btn btn-ghost" href="Pages/tours.php">Select Tour</a>
     </div>
 
     <div class="row authors">

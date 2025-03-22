@@ -30,10 +30,10 @@ $galleryItems = $repo->getAll();
         </a>
         <ul class="main-nav">
           <li><a href="../index.php">Home</a></li>
-          <li><a href="sights.html">Sights</a></li>
+          <li><a href="sights.php">Sights</a></li>
           <li><a href="gallery.php">Gallery</a></li>
-          <li><a href="tours.html">Tours</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="tours.php">Tours</a></li>
+          <li><a href="contact.php">Contact</a></li>
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <li><a href="#"><?php echo $_SESSION['user_name']; ?></a></li>
             <li><a href="logout.php">Logout</a></li>
@@ -80,10 +80,10 @@ $galleryItems = $repo->getAll();
       <div class="col span-1-of-2">
         <ul class="footer-nav">
           <li><a href="../index.php">Home</a></li>
-          <li><a href="sights.html">Sights</a></li>
+          <li><a href="sights.php">Sights</a></li>
           <li><a href="gallery.php">Gallery</a></li>
-          <li><a href="tours.html">Tours</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="tours.php">Tours</a></li>
+          <li><a href="contact.php">Contact</a></li>
         </ul>
       </div>
       <div class="col span-1-of-2">
