@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
-session_start();
-require_once __DIR__ . '/../Backend/repository/TourRepository.php';
-$repo = new TourRepository();
-$tourItems = $repo->getAll();
-?>
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="Plan your adventure in Mestia. Explore guided tours to its mountains, waterfalls, and historic villages." />
+    content="Discover Mestia's landmarks, from iconic towers to stunning natural wonders. A guide to its rich history and breathtaking views." />
 
-  <title>Explore Mestia</title>
+  <title>Sights of Mestia</title>
   <link
     href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap"
     rel="stylesheet" />
@@ -38,9 +31,7 @@ $tourItems = $repo->getAll();
           <li><a href="tours.php">Tours</a></li>
           <li><a href="contact.php">Contact</a></li>
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-            <li><a href="#">
-                <?php echo $_SESSION['user_name']; ?>
-              </a></li>
+            <li><a href="#"><?php echo $_SESSION['user_name']; ?></a></li>
             <li><a href="logout.php">Logout</a></li>
           <?php else: ?>
             <li><a href="signIn.php">Sign In</a></li>
@@ -78,77 +69,139 @@ $tourItems = $repo->getAll();
 
   <main>
     <div class="row">
-      <h2>Explore Mestia - Guided Tours & Adventures</h2>
+      <h2>Sights of Mestia</h2>
       <p class="info-text">
-        Embark on a journey through Mestia with our expertly guided tours.
-        Whether you’re looking to explore the town’s historical landmarks,
-        trek through its breathtaking mountains, or immerse yourself in local
-        traditions, our tours offer a unique way to experience the heart of
-        Svaneti. Discover hidden gems and gain insider knowledge about this
-        stunning Georgian destination with a tour that suits your interests.
+        Explore the stunning landmarks and rich cultural heritage of Mestia!
+        This page showcases the must-see attractions and hidden gems that make
+        this Georgian mountain town a unique destination. Whether you're
+        interested in historical landmarks or natural wonders, you're in the
+        right place to start your journey.
       </p>
     </div>
 
-    <section class="popular-tours-section">
+    <section class="info-section">
       <div class="row">
-        <h2>Popular tours</h2>
-      </div>
-      <div class="row">
-        <div class="popular-tours-grid">
-          <?php foreach ($tourItems as $tour): ?>
-            <?php if ($tour->is_popular): ?>
-              <div class="card">
-                <img
-                  src="..<?php echo htmlspecialchars($tour->image_path); ?>"
-                  alt="<?php echo htmlspecialchars($tour->alt_text); ?>" />
-                <p><?php echo htmlspecialchars($tour->title); ?></p>
-              </div>
-            <?php endif; ?>
-          <?php endforeach; ?>
+        <div class="col span-1-of-2">
+          <h3>Mestia: A Hidden Gem in the Georgian Mountains</h3>
+          <p>
+            Nestled in the heart of the Caucasus Mountains, Mestia is a
+            picturesque town known for its stunning natural beauty and rich
+            cultural heritage. With its towering snow-capped peaks, lush
+            valleys, and historic architecture, it offers visitors a unique
+            blend of adventure and history. This charming town is a gateway to
+            the Svaneti region, one of the most remote and culturally
+            preserved areas in Georgia.
+          </p>
+          <h3>A Land of History and Tradition</h3>
+          <p>
+            Mestia is home to remarkable ancient landmarks, including medieval
+            Svan towers that have stood the test of time for centuries. These
+            distinctive stone structures once served as both homes and
+            defensive fortresses for the Svans, the region's indigenous
+            people. The town's rich traditions, vibrant festivals, and
+            folklore are deeply embedded in the daily life of its residents,
+            making Mestia a fascinating place to explore for those interested
+            in Georgia’s unique cultural tapestry.
+          </p>
+          <h3>An Adventurer’s Paradise</h3>
+          <p>
+            For outdoor enthusiasts, Mestia is a paradise. Surrounded by
+            breathtaking mountain scenery, it offers a range of activities
+            from hiking and trekking to skiing and mountaineering. The nearby
+            glaciers, pristine lakes, and well-preserved wildlife make it an
+            ideal destination for nature lovers. Whether you're looking to
+            explore ancient villages or embark on an adventurous trail, Mestia
+            provides endless opportunities for exploration.
+          </p>
         </div>
-      </div>
-      <div class="row">
-        <div class="col span-full center">
-          <input type="submit" value="See More!" />
+        <div class="col span-1-of-2">
+          <div class="card">
+            <img
+              src="../Assets/Sights/Mestia.webp"
+              alt="Close up shot of Mestia Towers in winter" />
+            <p>Town of Mestia</p>
+          </div>
         </div>
       </div>
     </section>
 
     <div class="row">
-      <h2>Magical routes of Mestia</h2>
+      <p class="info-text">
+        Below, you’ll find a curated list of Mestia’s most important sights.
+        From iconic landmarks and historical monuments to traditional foods
+        and cultural experiences, these highlights offer a deeper look into
+        what makes Mestia a unique destination.
+      </p>
     </div>
-    <div class="all-tours-section">
-      <?php foreach ($tourItems as $tour): ?>
-        <div class="row tour-section h-event">
-          <div class="col span-1-of-2">
-            <figure aria-label="<?php echo htmlspecialchars($tour->alt_text); ?>">
-              <img
-                src="..<?php echo htmlspecialchars($tour->image_path); ?>"
-                alt="<?php echo htmlspecialchars($tour->alt_text); ?>"
-                class="u-photo" />
-              <h3 class="p-name"><?php echo htmlspecialchars($tour->title); ?></h3>
-              <p class="p-location"><?php echo htmlspecialchars($tour->location); ?></p>
-            </figure>
-          </div>
-          <div class="col span-1-of-2 tour-info">
-            <h4 class="tour-title p-name"><?php echo htmlspecialchars($tour->title); ?></h4>
-            <p class="tour-description p-description">
-              <?php echo htmlspecialchars($tour->description); ?>
-            </p>
-            <div class="tour-highlight">
-              <span><?php echo htmlspecialchars($tour->season); ?></span>
-              <span><?php echo htmlspecialchars($tour->duration); ?></span>
-            </div>
-            <div class="tour-highlight">
-              <span><?php echo htmlspecialchars($tour->difficulty); ?></span>
-              <span class="tour-distance"><?php echo htmlspecialchars($tour->distance); ?></span>
-            </div>
-            <input type="submit" value="More Details!" />
-          </div>
+    <div class="row">
+      <h2>Echoes of History in Mestia’s Landmarks</h2>
+    </div>
+    <div class="row">
+      <div class="sights-grid">
+        <div class="card">
+          <img
+            src="../Assets/Sights/Towers in Mestia.webp"
+            alt="Close up shot of Mestia towers in sunny day" />
+          <p>Traditional Towers in Mestia</p>
         </div>
-      <?php endforeach; ?>
+        <div class="card">
+          <img
+            src="../Assets/Sights/Inside of Mestia's History and Ethnography museum.webp"
+            alt=" Shot of Christial Icons inside museum of History and Ethnography of Mestia" />
+          <p>The Svaneti Museum of History and Ethnography</p>
+        </div>
+        <div class="card">
+          <img
+            src="../Assets/Sights/St. Nicolas Church.webp"
+            alt="Saint Nicolas Shurch" />
+          <p>Mestia’s Historical Churches</p>
+        </div>
+      </div>
     </div>
-
+    <div class="row">
+      <h2>Untamed Beauty: The Mountains of Mestia</h2>
+    </div>
+    <div class="row">
+      <div class="sights-grid">
+        <div class="card">
+          <img src="../Assets/Sights/Shkhara.webp" alt="Shkhara Mountain" />
+          <p>Shkhara</p>
+        </div>
+        <div class="card">
+          <img src="../Assets/Sights/Ushba.webp" alt="Ushba Mountain" />
+          <p>Ushba</p>
+        </div>
+        <div class="card">
+          <img src="../Assets/Sights/Tetnuldi.webp" alt="Tetnuldi Mountain" />
+          <p>Tetnuldi</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h2>Taste the Mountains: Svaneti’s Unique Cuisine:</h2>
+    </div>
+    <div class="row">
+      <div class="sights-grid">
+        <div class="card">
+          <img
+            src="../Assets/Sights/Kubdari.webp"
+            alt="Shot of Kubdari - A traditional Svanetian pastry made with meat" />
+          <p>Kubdari</p>
+        </div>
+        <div class="card">
+          <img
+            src="../Assets/Sights/Tashmidjabi.webp"
+            alt="Shot of Tashmidjabi - Svanetian dish from Georgian cuisine, mashed potatoes blended with cheese." />
+          <p>Tashmidjabi</p>
+        </div>
+        <div class="card">
+          <img
+            src="../Assets/Sights/Chvishtari.webp"
+            alt="Shot of Chvishtari - baked corn flour bread with cheese filling" />
+          <p>Chvishtari</p>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer>
@@ -229,15 +282,6 @@ $tourItems = $repo->getAll();
           href="https://unsplash.com"
           target="_blank"
           rel="noopener noreferrer">Unsplash</a>.
-      </p>
-    </div>
-    <div class="row">
-      <p class="citation">
-        Information about Tours and some images were sourced from
-        <a
-          href="https://georgiantravelguide.com/"
-          target="_blank"
-          rel="noopener noreferrer">Georgian Travel Guide</a>.
       </p>
     </div>
     <div class="row">
