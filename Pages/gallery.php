@@ -32,7 +32,7 @@ $galleryItems = $repo->getAll();
           <li><a href="../index.php">Home</a></li>
           <li><a href="sights.html">Sights</a></li>
           <li><a href="gallery.php">Gallery</a></li>
-          <li><a href="tours.html">Tours</a></li>
+          <li><a href="tours.php">Tours</a></li>
           <li><a href="contact.html">Contact</a></li>
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <li><a href="#"><?php echo $_SESSION['user_name']; ?></a></li>
@@ -82,7 +82,7 @@ $galleryItems = $repo->getAll();
           <li><a href="../index.php">Home</a></li>
           <li><a href="sights.html">Sights</a></li>
           <li><a href="gallery.php">Gallery</a></li>
-          <li><a href="tours.html">Tours</a></li>
+          <li><a href="tours.php">Tours</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>

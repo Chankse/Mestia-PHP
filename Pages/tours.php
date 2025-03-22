@@ -3,6 +3,9 @@
 
 <?php
 session_start();
+require_once __DIR__ . '/../Backend/repository/TourRepository.php';
+$repo = new TourRepository();
+$tourItems = $repo->getAll();
 ?>
 
 <head>
@@ -32,7 +35,7 @@ session_start();
           <li><a href="index.php">Home</a></li>
           <li><a href="./Pages/sights.html">Sights</a></li>
           <li><a href="./Pages/gallery.php">Gallery</a></li>
-          <li><a href="./Pages/tours.html">Tours</a></li>
+          <li><a href="./Pages/tours.php">Tours</a></li>
           <li><a href="./Pages/contact.php">Contact</a></li>
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <li><a href="#">
@@ -92,20 +95,16 @@ session_start();
       </div>
       <div class="row">
         <div class="popular-tours-grid">
-          <div class="card">
-            <img
-              src="../Assets/Tours/Lakumurash Toba Lake.webp"
-              alt="Wide shot of Toba Lake surrounded by Mountains" />
-            <p>Lakumura Lake</p>
-          </div>
-          <div class="card">
-            <img src="../Assets/Tours/Hatsvali Ski Resort.webp" alt="" />
-            <p>Hatsvali Ski Resort</p>
-          </div>
-          <div class="card">
-            <img src="../Assets/Tours/Okrostskhali Lake.webp" alt="" />
-            <p>Big and Smal Okrostskhali Lakes</p>
-          </div>
+          <?php foreach ($tourItems as $tour): ?>
+            <?php if ($tour->is_popular): ?>
+              <div class="card">
+                <img
+                  src="..<?php echo htmlspecialchars($tour->image_path); ?>"
+                  alt="<?php echo htmlspecialchars($tour->alt_text); ?>" />
+                <p><?php echo htmlspecialchars($tour->title); ?></p>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
         </div>
       </div>
       <div class="row">
@@ -118,204 +117,38 @@ session_start();
     <div class="row">
       <h2>Magical routes of Mestia</h2>
     </div>
-    <div class="row tour-section h-event">
-      <div class="col span-1-of-2">
-        <figure
-          aria-label="Image of Lakumurash Toba Lake with text saying Riding high in Mestia">
-          <img
-            src="../Assets/Tours/Lakumurash Toba Lake.webp"
-            alt="Wide shot of Toba Lake surrounded by Mountains"
-            class="u-photo" />
-          <h3 class="p-name">Lakumurash Toba</h3>
-          <p class="p-location">Khaishi, Svaneti</p>
-        </figure>
-      </div>
-      <div class="col span-1-of-2 tour-info">
-        <h4 class="tour-title p-name">Lakumurash Toba - Lakumura Lake</h4>
-        <p class="tour-description p-description">
-          Lakumura Lake (Or Lakumurash Toba in Svanian language) is one of the
-          most remarkable landmarks of Samegrelo-Zemo Svaneti. This vast lake,
-          surrounded by enormous cliffs, is located at an altitude of 2,584
-          meters above sea level. The adventurous journey to reach it starts
-          from the Svanetian village of Khaiši.
-        </p>
-        <div class="tour-highlight">
-          <span>July and August</span>
-          <span>7 Days</span>
+    <div class="all-tours-section">
+      <?php foreach ($tourItems as $tour): ?>
+        <div class="row tour-section h-event">
+          <div class="col span-1-of-2">
+            <figure aria-label="<?php echo htmlspecialchars($tour->alt_text); ?>">
+              <img
+                src="..<?php echo htmlspecialchars($tour->image_path); ?>"
+                alt="<?php echo htmlspecialchars($tour->alt_text); ?>"
+                class="u-photo" />
+              <h3 class="p-name"><?php echo htmlspecialchars($tour->title); ?></h3>
+              <p class="p-location"><?php echo htmlspecialchars($tour->location); ?></p>
+            </figure>
+          </div>
+          <div class="col span-1-of-2 tour-info">
+            <h4 class="tour-title p-name"><?php echo htmlspecialchars($tour->title); ?></h4>
+            <p class="tour-description p-description">
+              <?php echo htmlspecialchars($tour->description); ?>
+            </p>
+            <div class="tour-highlight">
+              <span><?php echo htmlspecialchars($tour->season); ?></span>
+              <span><?php echo htmlspecialchars($tour->duration); ?></span>
+            </div>
+            <div class="tour-highlight">
+              <span><?php echo htmlspecialchars($tour->difficulty); ?></span>
+              <span class="tour-distance"><?php echo htmlspecialchars($tour->distance); ?></span>
+            </div>
+            <input type="submit" value="More Details!" />
+          </div>
         </div>
-        <div class="tour-highlight">
-          <span>Extremely Hard</span>
-          <span class="tour-distance">20 Km</span>
-        </div>
-        <input type="submit" value="More Details!" />
-      </div>
+      <?php endforeach; ?>
     </div>
-    <div class="row tour-section h-event">
-      <div class="col span-1-of-2">
-        <figure aria-label="Image of Tobavarchkhili Lake with text saying Riding high in Mestia">
-          <img
-            src="../Assets/Tours/Tobavarchkhili Lake.webp"
-            alt="Shot of Tobavarchkhili Lake"
-            class="u-photo" />
-          <h3 class="p-name">Tobavarchkhili</h3>
-          <p class="p-location">Tsalenjikha</p>
-        </figure>
-      </div>
-      <div class="col span-1-of-2 tour-info">
-        <h4 class="tour-title p-name">Tobavarchkhili - Silver Lake</h4>
-        <p class="tour-description p-description">
-          Tobavarchkhili (Silver Lake), also known as Big Lake, is located in
-          Samegrelo-Zemo Svaneti, in the Chalenjikhi Municipality, on the
-          Egrisi Ridge at an altitude of 2,650 meters above sea level. It is
-          the largest lake on the Egrisi Ridge. The Magana River, which
-          originates from Tobavarchkhili Lake, forms a beautiful canyon and
-          waterfall nearby. Close to Tobavarchkhili Lake are the Greatgali
-          Lake, Kalalishi Lake, and Tsakhatsqarishi Lake.
-        </p>
-        <div class="tour-highlight">
-          <span>August and September</span>
-          <span>3 Days</span>
-        </div>
-        <div class="tour-highlight">
-          <span>Hard</span>
-          <span class="tour-distance">50 Km</span>
-        </div>
-        <input type="submit" value="More Details!" />
-      </div>
-    </div>
-    <div class="row tour-section h-event">
-      <div class="col span-1-of-2">
-        <figure aria-label="Image of Okrostskhali Lake with text saying Riding high in Mestia"></figure>
-        <img
-          src="../Assets/Tours/Okrostskhali Lake.webp"
-          alt="Shot of Okrostskhali Lake in the middle of muntain picks"
-          class="u-photo" />
-        <h3 class="p-name">Okrostskhali Lake</h3>
-        <p class="p-location">Mestia, Svaneti</p>
-        </figure>
-      </div>
-      <div class="col span-1-of-2 tour-info">
-        <h4 class="tour-title p-name">Big and Small Okrostskhali Lake Hike</h4>
-        <p class="tour-description p-description">
-          The Okrostskhali Lakes, located in Upper Svaneti on the border of
-          Svaneti and Abkhazia, are known for their stunning beauty and
-          challenging hiking routes. The larger lake has a turquoise color,
-          while the smaller one is darker. To reach the lakes, drive to the
-          village of Lukh and then hike 25 km, or take a 4x4 vehicle for part
-          of the journey. The trail passes through forests, grasslands, and
-          rivers, with a tough final climb. The hike includes crossing two
-          passes, including one at 2900m, offering breathtaking views of the
-          landscape and Abkhazia.
-        </p>
-        <div class="tour-highlight">
-          <span>Spring or Summer</span>
-          <span>1 Day</span>
-        </div>
-        <div class="tour-highlight">
-          <span>Easy</span>
-          <span class="tour-distance">3 Km</span>
-        </div>
-        <input type="submit" value="More Details!" />
-      </div>
-    </div>
-    <div class="row tour-section h-event">
-      <div class="col span-1-of-2">
-        <figure aria-label="Image of Ushba Waterfall with text saying Riding high in Mestia"></figure>
-        <img
-          src="../Assets/Tours/Ushba Waterfall Hike.webp"
-          alt="Shot of Ushba Mountains with Ushba Waterfall in th middle"
-          class="u-photo" />
-        <h3 class="p-name">Ushba Waterfall</h3>
-        <p class="p-location">Mestia, Svaneti</p>
-        </figure>
-      </div>
-      <div class="col span-1-of-2 tour-info">
-        <h4 class="tour-title p-name">Ushba Waterfall Hike</h4>
-        <p class="tour-description p-description">
-          Ushba Waterfall (Shdugra), the tallest waterfall in Georgia, is
-          located in Svaneti near the village of Mazeri. You can visit it from
-          both the bottom and the top, with the summit offering a view of the
-          Ushba Glacier and a stunning panorama of Svaneti. The hike to the
-          base is 3 km one way, with an additional 3 km to reach the top. The
-          final part of the trail is moderate in difficulty, involving a river
-          crossing, but the breathtaking scenery makes it well worth the
-          effort.
-        </p>
-        <div class="tour-highlight">
-          <span>Spring or Summer</span>
-          <span>1 Day</span>
-        </div>
-        <div class="tour-highlight">
-          <span>Easy</span>
-          <span class="tour-distance">3 Km</span>
-        </div>
-        <input type="submit" value="More Details!" />
-      </div>
-    </div>
-    <div class="row tour-section h-event">
-      <div class="col span-1-of-2">
-        <figure aria-label="Image of Tower of Lovers covered in Snow with text saying Riding high in Mestia"></figure>
-        <img
-          src="../Assets/Tours/Tower of Lovers.webp"
-          alt="Shot of Tover of Lovers coverd in Snow"
-          class="u-photo" />
-        <h3 class="p-name">Tower of Lovers</h3>
-        <p class="p-location">Mestia, Svaneti</p>
-        </figure>
-      </div>
-      <div class="col span-1-of-2 tour-info">
-        <h4 class="tour-title p-name">Visit to Legendary Tower of Lovers</h4>
-        <p class="tour-description p-description">
-          Tower of Love is a separate tower belonging to the Kurnidze family,
-          located in the Kalish village of Mestia Municipality in Svaneti. The
-          tower is built on a cliff on the right bank of the Enguri River. Due
-          to the popular love stories associated with it, the tower is
-          commonly referred to as the "Tower of Love."
-        </p>
-        <div class="tour-highlight">
-          <span>Any time</span>
-          <span>1 Hour</span>
-        </div>
-        <div class="tour-highlight">
-          <span></span>
-          <span class="tour-distance"></span>
-        </div>
-        <input type="submit" value="More Details!" />
-      </div>
-    </div>
-    <div class="row tour-section h-event">
-      <div class="col span-1-of-2">
-        <figure aria-label="Image of Hatsvali Ski Resort with text saying Riding high in Mestia"></figure>
-        <img
-          src="../Assets/Tours/Hatsvali Ski Resort.webp"
-          alt="Shot of Cable cars on top of Hatsvali Ski Trail"
-          class="u-photo" />
-        <h3 class="p-name">Hatsvali</h3>
-        <p class="p-location">Mestia, Svaneti</p>
-        </figure>
-      </div>
-      <div class="col span-1-of-2 tour-info">
-        <h4 class="tour-title p-name">Ski Resort Hatsvali</h4>
-        <p class="tour-description p-description">
-          Hatsvali Ski Resort is located in Svaneti, 8 km from Mestia, with a
-          maximum altitude of 2,348 meters and a minimum of 1,868 meters. The
-          resort is easily accessible from Mestia via an asphalt road or a
-          6-seat cable car. In summer, the cable car doesn't operate, so
-          you'll need to drive. In winter, the road is cleared, and any
-          vehicle prepared for snow can reach the resort. Taxis are also
-          available from the center of Mestia.
-        </p>
-        <div class="tour-highlight">
-          <span>Winter</span>
-          <span>3 Days</span>
-        </div>
-        <div class="tour-highlight">
-          <span></span>
-          <span class="tour-distance"></span>
-        </div>
-        <input type="submit" value="More Details!" />
-      </div>
-    </div>
+
   </main>
 
   <footer>
@@ -325,7 +158,7 @@ session_start();
           <li><a href="../index.html">Home</a></li>
           <li><a href="sights.html">Sights</a></li>
           <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="tours.html">Tours</a></li>
+          <li><a href="tours.php">Tours</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
