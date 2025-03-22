@@ -25,14 +25,14 @@
     <header class="home">
       <nav>
         <div class="row">
-          <a href="index.html" aria-label="Go to home page" class="logo">
+          <a href="index.php" aria-label="Go to home page" class="logo">
             <img src="Assets/logo.png" alt="Website Logo" />
             <p>Mestia</p>
           </a>
           <ul class="main-nav">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.php">Home</a></li>
             <li><a href="./Pages/sights.html">Sights</a></li>
-            <li><a href="./Pages/gallery.html">Gallery</a></li>
+            <li><a href="./Pages/gallery.php">Gallery</a></li>
             <li><a href="./Pages/tours.html">Tours</a></li>
             <li><a href="./Pages/contact.html">Contact</a></li>
             <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
