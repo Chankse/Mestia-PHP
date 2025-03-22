@@ -3,16 +3,21 @@ class Response {
     public bool $isSuccess;
     public bool $isFailure;
     public array $errors;
+    public $data;
 
-    public function __construct(bool $isSuccess, array $errors = []) {
+    public function __construct(bool $isSuccess, $data = null, array $errors = []) {
         $this->isSuccess = $isSuccess;
-        $this->isFailure = !$isSuccess;  // If isSuccess is false, isFailure will be true
+        $this->isFailure = !$isSuccess; 
         $this->errors = $errors;
+        $this->data = $data;  
     }
 
-    // You can add additional helper methods if needed
     public function addError(string $error): void {
         $this->errors[] = $error;
+    }
+
+    public function setData($data): void {
+        $this->data = $data;
     }
 }
 ?>
