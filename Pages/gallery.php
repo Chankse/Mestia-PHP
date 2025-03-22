@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<?php
+  session_start();
+?>
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,16 +26,25 @@
     <header>
       <nav>
         <div class="row">
-          <a href="../index.html" aria-label="Go to home page" class="logo">
+          <a href="../index.php" aria-label="Go to home page" class="logo">
             <img src="../Assets/logo.png" alt="Website Logo" />
             <p>Mestia</p>
           </a>
           <ul class="main-nav">
-            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.php">Home</a></li>
             <li><a href="sights.html">Sights</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="gallery.php">Gallery</a></li>
             <li><a href="tours.html">Tours</a></li>
             <li><a href="contact.html">Contact</a></li>
+            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+            <li><a href="#">
+                <?php echo $_SESSION['user_name']; ?>
+            </a></li>
+            <li><a href="./Pages/logout.php">Logout</a></li>
+            <?php else: ?>  
+              <li><a href="./Pages/signIn.php">Sign In</a></li>
+              <li><a href="./Pages/signUp.php">Sign Up</a></li>
+            <?php endif; ?>
           </ul>
 
           <div class="mobile-nav-icon">
@@ -71,97 +85,47 @@
       </div>
 
       <div class="gallery-grid">
-        <figure
-          aria-label="Wide shot of Ushguli village with sunny mountain in the background with text saying Timeless Ushguli"
-        >
-          <img
-            src="../Assets/Gallery/Timeless Ushguli.webp"
-            alt="Wide shot of Ushguli village with sunny mountain in the background"
-          />
-          <h3>Timeless<br />Ushguli</h3>
-        </figure>
-        <figure
-          aria-label="Triangular cabin house framed by pine trees, watched over by Ushba mountain in the background with text saying Ushba’s Watchful Presence"
-        >
-          <img
-            src="../Assets/Gallery/Ushba’s Watchful Presence.webp"
-            alt="Triangular cabin house framed by pine trees, watched over by Ushba mountain in the background"
-          />
-          <h3>Ushba’s<br />Watchful Presence</h3>
-        </figure>
-        <figure
-          aria-label="Wide shot of cable cars in the summer day with mountains in the background with text saying Riding High in Mestia"
-        >
-          <img
-            src="../Assets/Gallery/Riding High in Mestia.webp"
-            alt="Wide shot of cable cars in the summer day with mountains in the background"
-          />
-          <h3>Riding<br />High in<br />Mestia</h3>
-        </figure>
-        <figure
-          aria-label="BW photo of local villager man sitting in front of stone house, wearing traditional Svani hat with text saying Guardian of Traditions"
-        >
-          <img
-            src="../Assets/Gallery/Guardian of Traditions.webp"
-            alt="BW photo of local villager man sitting in front of stone house, wearing traditional Svani hat"
-          />
-          <h3>Guardian of Traditions</h3>
-        </figure>
-        <figure
-          aria-label="Winding footprints on the snow with mountains in the background with text saying Snowy Journey Unfolds"
-        >
-          <img
-            src="../Assets/Gallery/Snowy Journey Unfolds.webp"
-            alt="Winding footprints on the snow with mountains in the background"
-          />
-          <h3>Snowy Journey Unfolds</h3>
-        </figure>
-        <figure
-          aria-label="Image of the shadows of Cable Cars on the snowy skiing trail with text saying Gliding Over White Peaks"
-        >
-          <img
-            src="../Assets/Gallery/Gliding Over White Peaks.webp"
-            alt="Image of the shadows of Cable Cars on the snowy skiing trail"
-          />
-          <h3>Gliding Over White Peaks</h3>
-        </figure>
-        <figure
-          aria-label="Villager walking on a mountain trail towards village of Ushguli with text saying Path to Past"
-        >
-          <img
-            src="../Assets/Gallery/Path to the Past.webp"
-            alt="Villager walking on a mountain trail towards village of Ushguli"
-          />
-          <h3>Path to Past</h3>
-        </figure>
-        <figure
-          aria-label="Closeup shot of top of Ushba mountain with clear blue sky in the background with text saying Pride of the Caucasus"
-        >
-          <img
-            src="../Assets/Gallery/Pride of the Caucasus.webp"
-            alt="Closeup shot of top of Ushba mountain with clear blue sky in the background"
-          />
-          <h3>Pride of the Caucasus</h3>
-        </figure>
-        <figure
-          aria-label="Shot of Mestia taken from on top of mountain with text saying Views from Above"
-        >
-          <img
-            src="../Assets/Gallery/Views from Above.webp"
-            alt="Shot of Mestia taken from on top of mountain"
-          />
-          <h3>Views from Above</h3>
-        </figure>
+        <?php
+        include_once 'config.php';
+        $connection = new mysqli($servername, $username, $password, $dbname);
+
+        if ($connection->connect_error) {
+          die("Connection failed: " . $connection->connect_error);
+        }
+      
+        $query = "SELECT path, alt_text, name FROM Gallery";
+        $result = mysqli_query($connection, $query);
+      
+        if (mysqli_num_rows($result) > 0) {
+          while ($row = mysqli_fetch_assoc($result)) {
+            $path = $row['path'];
+            $altText = $row['alt_text'];
+            $name = $row['name'];
+            $ariaLabel = $altText . " with text saying " . $name;
+            ?>
+            <figure aria-label="<?php echo htmlspecialchars($ariaLabel); ?>">
+              <img src="<?php echo htmlspecialchars($path); ?>" alt="<?php echo htmlspecialchars($altText); ?>" />
+              <h3><?php echo nl2br(htmlspecialchars($name)); ?></h3>
+            </figure>
+            <?php
+          }
+        } else {
+          echo "<p>No images found in the gallery.</p>";
+        }
+      
+        mysqli_close($connection);
+        ?>
       </div>
+
     </main>
 
     <footer>
       <div class="row">
         <div class="col span-1-of-2">
           <ul class="footer-nav">
-            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.php">Home</a></li>
             <li><a href="sights.html">Sights</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="gallery.php">Gallery</a></li>
             <li><a href="tours.html">Tours</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
