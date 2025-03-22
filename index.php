@@ -34,7 +34,7 @@
             <li><a href="./Pages/sights.html">Sights</a></li>
             <li><a href="./Pages/gallery.php">Gallery</a></li>
             <li><a href="./Pages/tours.html">Tours</a></li>
-            <li><a href="./Pages/contact.html">Contact</a></li>
+            <li><a href="./Pages/contact.php">Contact</a></li>
             <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <li><a href="#">
                 <?php echo $_SESSION['user_name']; ?>

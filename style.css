@@ -293,6 +293,7 @@ input[type="submit"]:active {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
 select,
 textarea {
   width: 100%;
@@ -305,6 +306,7 @@ textarea {
 
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
+input[type="password"]::placeholder,
 select::placeholder,
 textarea::placeholder {
   color: var(--dark);
