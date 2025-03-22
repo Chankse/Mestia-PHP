@@ -2,10 +2,10 @@
 <html lang="en">
 
 <?php
-  session_start();
-  require_once __DIR__ . '/../Backend/repository/GalleryRepository.php';
-  $repo = new GalleryRepository();
-  $galleryItems = $repo->getAll();
+session_start();
+require_once __DIR__ . '/../Backend/repository/GalleryRepository.php';
+$repo = new GalleryRepository();
+$galleryItems = $repo->getAll();
 ?>
 
 <head>
@@ -37,7 +37,7 @@
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <li><a href="#"><?php echo $_SESSION['user_name']; ?></a></li>
             <li><a href="logout.php">Logout</a></li>
-          <?php else: ?>  
+          <?php else: ?>
             <li><a href="signIn.php">Sign In</a></li>
             <li><a href="signUp.php">Sign Up</a></li>
           <?php endif; ?>
@@ -61,18 +61,17 @@
     </div>
 
     <div class="gallery-grid">
-  <?php if (!empty($galleryItems)): ?>
-    <?php foreach ($galleryItems as $item): ?>
-      <figure aria-label="<?php echo htmlspecialchars($item->getAltText() . ' with text saying ' . $item->getName()); ?>">
-        <img src="..<?php echo htmlspecialchars($item->getPath()); ?>" alt="<?php echo htmlspecialchars($item->getAltText()); ?>" />
-        <h3><?php echo nl2br(htmlspecialchars($item->getName())); ?></h3>
-      </figure>
-    <?php endforeach; ?>
-  <?php else: ?>
-    <p>No images found in the gallery.</p>
-  <?php endif; ?>
-</div>
-
+      <?php if (!empty($galleryItems)): ?>
+        <?php foreach ($galleryItems as $item): ?>
+          <figure aria-label="<?php echo $item->alt_text; ?>">
+            <img src="..<?php echo $item->path; ?>" alt="<?php echo $item->alt_text; ?>" />
+            <h3><?php echo $item->name; ?></h3>
+          </figure>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p>No images found in the gallery.</p>
+      <?php endif; ?>
+    </div>
 
   </main>
 
@@ -125,4 +124,5 @@
 
   <script src="../script.js"></script>
 </body>
+
 </html>
