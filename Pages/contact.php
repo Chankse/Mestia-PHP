@@ -59,9 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           <li><a href="tours.php">Tours</a></li>
           <li><a href="contact.php">Contact</a></li>
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-            <li><a href="#">
-                <?php echo $_SESSION['user_name']; ?>
-              </a></li>
+            <li><a href="myPage.php">My Page</a></li>
             <li><a href="logout.php">Logout</a></li>
           <?php else: ?>
             <li><a href="signIn.php">Sign In</a></li>
@@ -102,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <h2>We're happy to hear from you</h2>
     </div>
 
-    <div class="row form-result">
+    <div class="row message">
       <?php if (!empty($success_message)): ?>
         <div class="form-success">
           <?php echo htmlspecialchars($success_message); ?>

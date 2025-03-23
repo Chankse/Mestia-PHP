@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Response.php';
+require_once __DIR__ . '/../models/Response.php';
 
 class TokenGenerator {
     private static string $secretKey = "your_secret_key"; // Change this to a strong secret key

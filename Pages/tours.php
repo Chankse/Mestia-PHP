@@ -38,9 +38,7 @@ $tourItems = $repo->getAll();
           <li><a href="tours.php">Tours</a></li>
           <li><a href="contact.php">Contact</a></li>
           <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-            <li><a href="#">
-                <?php echo $_SESSION['user_name']; ?>
-              </a></li>
+            <li><a href="myPage.php">My Page</a></li>
             <li><a href="logout.php">Logout</a></li>
           <?php else: ?>
             <li><a href="signIn.php">Sign In</a></li>

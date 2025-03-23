@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config/Connection.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Response.php';
 require_once __DIR__ . '/../auth/TokenGenerator.php';
+require_once __DIR__ . '/../models/RegisterRequest.php';
 
 class UsersRepository {
     private $conn;
@@ -12,7 +13,7 @@ class UsersRepository {
         $this->conn = $database->connect();
     }
 
-    public function register(User $user): Response {
+    public function register(RegisterRequest $user): Response {
         $errors = $user->validate();
         if (!empty($errors)) {
             return new Response(false, null, $errors);
@@ -58,13 +59,16 @@ class UsersRepository {
     }
 
     public function signIn(string $email, string $password): Response {
+        echo "<script>console.log('email: " . addslashes($email) . "and passwprd: " . addslashes($password) . "');</script>";
+
         $user = $this->getUserByEmail($email);
         if (!$user) {
-            return new Response(false, null, ["Invalid email or password."]);
+            return new Response(false, null, ["User Doesnt exist."]);
         }
 
         if (!password_verify($password, $user->password)) {
-            return new Response(false, null, ["Invalid email or password."]);
+            echo "<script>console.log('Checking password: " . addslashes($password) . " vs hash: " . addslashes($user->password) . "');</script>";
+            return new Response(false, null, ["Invalid password."]);
         }
 
         // Generate a token

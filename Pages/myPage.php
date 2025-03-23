@@ -1,21 +1,9 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <?php
 session_start();
-
-require_once __DIR__ . '/../Backend/repository/UsersRepository.php';
-
-if (isset($_SESSION['user_token'])) {
-    $repo = new UsersRepository();
-    $repo->signOut($_SESSION['user_token']);
-}
-
-// Clear session
-$_SESSION = [];
-session_destroy();
 ?>
-
-<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -24,7 +12,7 @@ session_destroy();
         name="description"
         content="Sign In to see the tours and planned trips to Mestia." />
 
-    <title>Log Out</title>
+    <title>My Page</title>
     <link
         href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap"
         rel="stylesheet" />
@@ -84,11 +72,8 @@ session_destroy();
     </header>
 
     <main>
-        <div class="row message">
-            <div class="form-success">
-                You have successfully logged out.
-                <a href="signIn.php">Sign In</a> again.
-            </div>
+        <div class="row">
+            <h2>My Tours</h2>
         </div>
     </main>
 
