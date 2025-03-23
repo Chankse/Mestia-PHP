@@ -30,7 +30,7 @@ session_start();
         </a>
         <ul class="main-nav">
           <li><a href="index.php">Home</a></li>
-          <li><a href="./Pages/sights.html">Sights</a></li>
+          <li><a href="./Pages/sights.php">Sights</a></li>
           <li><a href="./Pages/gallery.php">Gallery</a></li>
           <li><a href="./Pages/tours.php">Tours</a></li>
           <li><a href="./Pages/contact.php">Contact</a></li>
@@ -78,7 +78,7 @@ session_start();
         Explore beautiful mountains of Georgia<br />With unforgettable food,
         culture and sightseeings.
       </h1>
-      <a class="btn btn-full" href="Pages/sights.html">Learn More</a>
+      <a class="btn btn-full" href="Pages/sights.php">Learn More</a>
       <a class="btn btn-ghost" href="Pages/tours.php">Select Tour</a>
     </div>
 

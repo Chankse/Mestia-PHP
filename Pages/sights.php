@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+session_start();
+require_once __DIR__ . '/../Backend/repository/SightsRepository.php';
+$repo = new SightsRepository();
+$intro = $repo->getIntro();
+$sights = $repo->getAll();
+?>
+
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -82,43 +91,14 @@
     <section class="info-section">
       <div class="row">
         <div class="col span-1-of-2">
-          <h3>Mestia: A Hidden Gem in the Georgian Mountains</h3>
-          <p>
-            Nestled in the heart of the Caucasus Mountains, Mestia is a
-            picturesque town known for its stunning natural beauty and rich
-            cultural heritage. With its towering snow-capped peaks, lush
-            valleys, and historic architecture, it offers visitors a unique
-            blend of adventure and history. This charming town is a gateway to
-            the Svaneti region, one of the most remote and culturally
-            preserved areas in Georgia.
-          </p>
-          <h3>A Land of History and Tradition</h3>
-          <p>
-            Mestia is home to remarkable ancient landmarks, including medieval
-            Svan towers that have stood the test of time for centuries. These
-            distinctive stone structures once served as both homes and
-            defensive fortresses for the Svans, the region's indigenous
-            people. The town's rich traditions, vibrant festivals, and
-            folklore are deeply embedded in the daily life of its residents,
-            making Mestia a fascinating place to explore for those interested
-            in Georgia’s unique cultural tapestry.
-          </p>
-          <h3>An Adventurer’s Paradise</h3>
-          <p>
-            For outdoor enthusiasts, Mestia is a paradise. Surrounded by
-            breathtaking mountain scenery, it offers a range of activities
-            from hiking and trekking to skiing and mountaineering. The nearby
-            glaciers, pristine lakes, and well-preserved wildlife make it an
-            ideal destination for nature lovers. Whether you're looking to
-            explore ancient villages or embark on an adventurous trail, Mestia
-            provides endless opportunities for exploration.
-          </p>
+          <h3><?php echo htmlspecialchars($intro->title); ?></h3>
+          <p><?php echo nl2br(htmlspecialchars($intro->content)); ?></p>
         </div>
         <div class="col span-1-of-2">
           <div class="card">
             <img
-              src="../Assets/Sights/Mestia.webp"
-              alt="Close up shot of Mestia Towers in winter" />
+              src="..<?php echo htmlspecialchars($intro->image_path); ?>"
+              alt="<?php echo htmlspecialchars($intro->image_alt); ?>" />
             <p>Town of Mestia</p>
           </div>
         </div>
@@ -133,75 +113,25 @@
         what makes Mestia a unique destination.
       </p>
     </div>
-    <div class="row">
-      <h2>Echoes of History in Mestia’s Landmarks</h2>
-    </div>
-    <div class="row">
-      <div class="sights-grid">
-        <div class="card">
-          <img
-            src="../Assets/Sights/Towers in Mestia.webp"
-            alt="Close up shot of Mestia towers in sunny day" />
-          <p>Traditional Towers in Mestia</p>
-        </div>
-        <div class="card">
-          <img
-            src="../Assets/Sights/Inside of Mestia's History and Ethnography museum.webp"
-            alt=" Shot of Christial Icons inside museum of History and Ethnography of Mestia" />
-          <p>The Svaneti Museum of History and Ethnography</p>
-        </div>
-        <div class="card">
-          <img
-            src="../Assets/Sights/St. Nicolas Church.webp"
-            alt="Saint Nicolas Shurch" />
-          <p>Mestia’s Historical Churches</p>
+
+    <?php foreach ($sights->sections as $sight): ?>
+      <div class="row">
+        <h2><?php echo htmlspecialchars($sight->title); ?></h2>
+      </div>
+      <div class="row">
+        <div class="sights-grid">
+          <?php foreach ($sight->cards as $card): ?>
+            <div class="card">
+              <img
+                src="..<?php echo htmlspecialchars($card->image_path); ?>"
+                alt="<?php echo htmlspecialchars($card->alt_text); ?>" />
+              <p><?php echo htmlspecialchars($card->label); ?></p>
+            </div>
+          <?php endforeach; ?>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <h2>Untamed Beauty: The Mountains of Mestia</h2>
-    </div>
-    <div class="row">
-      <div class="sights-grid">
-        <div class="card">
-          <img src="../Assets/Sights/Shkhara.webp" alt="Shkhara Mountain" />
-          <p>Shkhara</p>
-        </div>
-        <div class="card">
-          <img src="../Assets/Sights/Ushba.webp" alt="Ushba Mountain" />
-          <p>Ushba</p>
-        </div>
-        <div class="card">
-          <img src="../Assets/Sights/Tetnuldi.webp" alt="Tetnuldi Mountain" />
-          <p>Tetnuldi</p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <h2>Taste the Mountains: Svaneti’s Unique Cuisine:</h2>
-    </div>
-    <div class="row">
-      <div class="sights-grid">
-        <div class="card">
-          <img
-            src="../Assets/Sights/Kubdari.webp"
-            alt="Shot of Kubdari - A traditional Svanetian pastry made with meat" />
-          <p>Kubdari</p>
-        </div>
-        <div class="card">
-          <img
-            src="../Assets/Sights/Tashmidjabi.webp"
-            alt="Shot of Tashmidjabi - Svanetian dish from Georgian cuisine, mashed potatoes blended with cheese." />
-          <p>Tashmidjabi</p>
-        </div>
-        <div class="card">
-          <img
-            src="../Assets/Sights/Chvishtari.webp"
-            alt="Shot of Chvishtari - baked corn flour bread with cheese filling" />
-          <p>Chvishtari</p>
-        </div>
-      </div>
-    </div>
+    <?php endforeach; ?>
+
   </main>
 
   <footer>

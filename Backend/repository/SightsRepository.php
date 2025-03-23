@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/Connection.php';
-require_once __DIR__ . '/../models/Tour.php';
+require_once __DIR__ . '/../models/Sights.php';
 
 class SightsRepository
 {

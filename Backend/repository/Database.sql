@@ -60,6 +60,80 @@ INSERT INTO tours (name, title, location, description, season, duration, difficu
 ('Ushba Waterfall', 'Ushba Waterfall Hike', 'Mestia, Svaneti', 'Ushba Waterfall (Shdugra), the tallest waterfall in Georgia, is located in Svaneti near the village of Mazeri. You can visit it from both the bottom and the top, with the summit offering a view of the Ushba Glacier and a stunning panorama of Svaneti. The hike to the base is 3 km one way, with an additional 3 km to reach the top. The final part of the trail is moderate in difficulty, involving a river crossing, but the breathtaking scenery makes it well worth the effort.', 'Spring or Summer', '1 Day', 'Easy', '3 Km', '/Assets/Tours/Ushba Waterfall Hike.webp', 'Shot of Ushba Mountains with Ushba Waterfall in the middle', FALSE),
 ('Tower of Lovers', 'Visit to Legendary Tower of Lovers', 'Mestia, Svaneti', 'Tower of Love is a separate tower belonging to the Kurnidze family, located in the Kalish village of Mestia Municipality in Svaneti. The tower is built on a cliff on the right bank of the Enguri River. Due to the popular love stories associated with it, the tower is commonly referred to as the "Tower of Love."', 'Any time', '1 Hour', '', '', '/Assets/Tours/Tower of Lovers.webp', 'Shot of Tower of Lovers covered in snow with text saying Riding high in Mestia', FALSE);
 
+-- Create the database
+CREATE DATABASE IF NOT EXISTS Mestia CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE Mestia;
+
+-- Create sights_intro table (info section)
+CREATE TABLE IF NOT EXISTS sights_intro (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    image_path TEXT NOT NULL,
+    image_alt TEXT NOT NULL
+);
+
+-- Insert example intro content (based on your HTML)
+INSERT INTO sights_intro (title, content, image_path, image_alt)
+VALUES (
+    'Mestia: A Hidden Gem in the Georgian Mountains',
+    'Nestled in the heart of the Caucasus Mountains, Mestia is a picturesque town known for its stunning natural beauty and rich cultural heritage. With its towering snow-capped peaks, lush valleys, and historic architecture, it offers visitors a unique blend of adventure and history. This charming town is a gateway to the Svaneti region, one of the most remote and culturally preserved areas in Georgia.
+
+A Land of History and Tradition
+Mestia is home to remarkable ancient landmarks, including medieval Svan towers that have stood the test of time for centuries. These distinctive stone structures once served as both homes and defensive fortresses for the Svans, the region\'s indigenous people. The town\'s rich traditions, vibrant festivals, and folklore are deeply embedded in the daily life of its residents, making Mestia a fascinating place to explore for those interested in Georgia’s unique cultural tapestry.
+
+An Adventurer’s Paradise
+For outdoor enthusiasts, Mestia is a paradise. Surrounded by breathtaking mountain scenery, it offers a range of activities from hiking and trekking to skiing and mountaineering. The nearby glaciers, pristine lakes, and well-preserved wildlife make it an ideal destination for nature lovers. Whether you\'re looking to explore ancient villages or embark on an adventurous trail, Mestia provides endless opportunities for exploration.',
+    '/Assets/Sights/Mestia.webp',
+    'Close up shot of Mestia Towers in winter'
+);
+
+-- Create sights_sections table
+CREATE TABLE IF NOT EXISTS sights_sections (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title TEXT NOT NULL
+);
+
+-- Create sights_cards table
+CREATE TABLE IF NOT EXISTS sights_cards (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    section_id INT NOT NULL,
+    image_path TEXT NOT NULL,
+    alt_text TEXT NOT NULL,
+    label TEXT NOT NULL,
+    FOREIGN KEY (section_id) REFERENCES sights_sections(id) ON DELETE CASCADE
+);
+
+-- Insert example sections and cards (based on your HTML)
+
+-- Section 1: Echoes of History
+INSERT INTO sights_sections (title) VALUES ('Echoes of History in Mestia’s Landmarks');
+SET @section1 = LAST_INSERT_ID();
+
+INSERT INTO sights_cards (section_id, image_path, alt_text, label) VALUES
+(@section1, '/Assets/Sights/Towers in Mestia.webp', 'Close up shot of Mestia towers in sunny day', 'Traditional Towers in Mestia'),
+(@section1, '/Assets/Sights/Inside of Mestia\'s History and Ethnography museum.webp', 'Shot of Christian Icons inside museum of History and Ethnography of Mestia', 'The Svaneti Museum of History and Ethnography'),
+(@section1, '/Assets/Sights/St. Nicolas Church.webp', 'Saint Nicolas Church', 'Mestia’s Historical Churches');
+
+-- Section 2: Untamed Beauty
+INSERT INTO sights_sections (title) VALUES ('Untamed Beauty: The Mountains of Mestia');
+SET @section2 = LAST_INSERT_ID();
+
+INSERT INTO sights_cards (section_id, image_path, alt_text, label) VALUES
+(@section2, '/Assets/Sights/Shkhara.webp', 'Shkhara Mountain', 'Shkhara'),
+(@section2, '/Assets/Sights/Ushba.webp', 'Ushba Mountain', 'Ushba'),
+(@section2, '/Assets/Sights/Tetnuldi.webp', 'Tetnuldi Mountain', 'Tetnuldi');
+
+-- Section 3: Cuisine
+INSERT INTO sights_sections (title) VALUES ('Taste the Mountains: Svaneti’s Unique Cuisine');
+SET @section3 = LAST_INSERT_ID();
+
+INSERT INTO sights_cards (section_id, image_path, alt_text, label) VALUES
+(@section3, '/Assets/Sights/Kubdari.webp', 'Shot of Kubdari - A traditional Svanetian pastry made with meat', 'Kubdari'),
+(@section3, '/Assets/Sights/Tashmidjabi.webp', 'Shot of Tashmidjabi - Svanetian dish from Georgian cuisine, mashed potatoes blended with cheese.', 'Tashmidjabi'),
+(@section3, '/Assets/Sights/Chvishtari.webp', 'Shot of Chvishtari - baked corn flour bread with cheese filling', 'Chvishtari');
+
+
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userName VARCHAR(255) NOT NULL,
