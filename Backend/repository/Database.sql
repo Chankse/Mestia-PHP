@@ -60,5 +60,11 @@ INSERT INTO tours (name, title, location, description, season, duration, difficu
 ('Ushba Waterfall', 'Ushba Waterfall Hike', 'Mestia, Svaneti', 'Ushba Waterfall (Shdugra), the tallest waterfall in Georgia, is located in Svaneti near the village of Mazeri. You can visit it from both the bottom and the top, with the summit offering a view of the Ushba Glacier and a stunning panorama of Svaneti. The hike to the base is 3 km one way, with an additional 3 km to reach the top. The final part of the trail is moderate in difficulty, involving a river crossing, but the breathtaking scenery makes it well worth the effort.', 'Spring or Summer', '1 Day', 'Easy', '3 Km', '/Assets/Tours/Ushba Waterfall Hike.webp', 'Shot of Ushba Mountains with Ushba Waterfall in the middle', FALSE),
 ('Tower of Lovers', 'Visit to Legendary Tower of Lovers', 'Mestia, Svaneti', 'Tower of Love is a separate tower belonging to the Kurnidze family, located in the Kalish village of Mestia Municipality in Svaneti. The tower is built on a cliff on the right bank of the Enguri River. Due to the popular love stories associated with it, the tower is commonly referred to as the "Tower of Love."', 'Any time', '1 Hour', '', '', '/Assets/Tours/Tower of Lovers.webp', 'Shot of Tower of Lovers covered in snow with text saying Riding high in Mestia', FALSE);
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
 -- to revert run 
 -- drop database if exists Mestia;
