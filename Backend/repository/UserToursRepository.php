@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../config/Connection.php';
-require_once __DIR__ . '/../utils/TokenGenerator.php';
+require_once __DIR__ . '/../auth/TokenGenerator.php';
 require_once __DIR__ . '/../models/Response.php';
-require_once __DIR__ . '/../repositories/UsersRepository.php';
-require_once __DIR__ . '/../repositories/ToursRepository.php';
+require_once __DIR__ . '/UsersRepository.php';
+require_once __DIR__ . '/TourRepository.php';
 
 class UserToursRepository {
     private $conn;
@@ -14,7 +14,7 @@ class UserToursRepository {
         $database = new Connection();
         $this->conn = $database->connect();
         $this->usersRepo = new UsersRepository();
-        $this->toursRepo = new ToursRepository();
+        $this->toursRepo = new TourRepository();
     }
 
     public function addToTour(string $token, string $tourName): Response {

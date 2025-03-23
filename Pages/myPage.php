@@ -3,7 +3,17 @@
 
 <?php
 session_start();
+require_once __DIR__ . '/../Backend/repository/UserToursRepository.php';
+$userToursRepo = new UserToursRepository();
+$token = $_SESSION['user_token'] ?? '';
+$response = $userToursRepo->myTours($token); // This returns a Response object
+
+$tourItems = [];
+if ($response->isSuccess && is_array($response->data)) {
+    $tourItems = $response->data; // This is your array of Tour objects
+}
 ?>
+
 
 <head>
     <meta charset="UTF-8" />
@@ -74,6 +84,37 @@ session_start();
     <main>
         <div class="row">
             <h2>My Tours</h2>
+        </div>
+
+        <div class="all-tours-section">
+            <?php foreach ($tourItems as $tour): ?>
+                <div class="row tour-section h-event">
+                    <div class="col span-1-of-2">
+                        <figure aria-label="<?php echo htmlspecialchars($tour->alt_text); ?>">
+                            <img
+                                src="..<?php echo htmlspecialchars($tour->image_path); ?>"
+                                alt="<?php echo htmlspecialchars($tour->alt_text); ?>"
+                                class="u-photo" />
+                            <h3 class="p-name"><?php echo htmlspecialchars($tour->title); ?></h3>
+                            <p class="p-location"><?php echo htmlspecialchars($tour->location); ?></p>
+                        </figure>
+                    </div>
+                    <div class="col span-1-of-2 tour-info">
+                        <h4 class="tour-title p-name"><?php echo htmlspecialchars($tour->title); ?></h4>
+                        <p class="tour-description p-description">
+                            <?php echo htmlspecialchars($tour->description); ?>
+                        </p>
+                        <div class="tour-highlight">
+                            <span><?php echo htmlspecialchars($tour->season); ?></span>
+                            <span><?php echo htmlspecialchars($tour->duration); ?></span>
+                        </div>
+                        <div class="tour-highlight">
+                            <span><?php echo htmlspecialchars($tour->difficulty); ?></span>
+                            <span class="tour-distance"><?php echo htmlspecialchars($tour->distance); ?></span>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </main>
 
